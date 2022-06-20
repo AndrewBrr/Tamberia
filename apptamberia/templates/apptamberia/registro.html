@@ -1,0 +1,28 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Para registrarse llene los campos con la informacion correspondiente </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+<body>
+
+    <form method="POST">{% csrf_token %}
+        
+
+        <h2> Ingresar usuario y contraseña </h2>
+        
+
+        <p>{{ form.as_p }} </p>
+
+        <button type="submit"> Registrar </button>
+
+    </form>
+
+
+</body>
+
+{% endblock %}
