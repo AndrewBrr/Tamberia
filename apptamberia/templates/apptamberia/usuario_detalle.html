@@ -1,0 +1,21 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Ahora solo queda que registres tus datos para convertirte en cliente </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+<p>NOBRE: {{usuario.nombre}}</p>
+<p>APELLIDO: {{usuario.apellido}}</p>
+<p>EMAIL: {{usuario.email}}</p>
+<p>TELEFONO: {{usuario.telefono}}</p>
+
+
+<p>
+    <a href="% url 'usuario_lista' %"> voler atras </a>
+</p>
+
+{% endblock %}

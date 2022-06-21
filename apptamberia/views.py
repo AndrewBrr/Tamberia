@@ -5,7 +5,7 @@ from django.template import loader
 from apptamberia.forms import Formulario_Productos
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout, authenticate
 
@@ -33,34 +33,61 @@ def register_request(request):
 
             usuario = form.cleaned_data['usuario']
             form.save()
-            return render(request, 'apptamberia/registrarUsuario.html')
+            return render(request, 'apptamberia/usuario/nuevo/.html')
 
         else:
-            return render(request, 'apptamberia/registrarUsuario.html', {'mensaje': f'error detectado al introducir los datos, for favor asegurate de que sean correctos o validos'})
+            return render(request, 'apptamberia/portal.html', {'mensaje': f'error detectado al introducir los datos, for favor asegurate de que sean correctos o validos'})
     else:
         form = UserRegisterForm()
         return render(request, 'apptamberia/registro.html', {'form': form})
 
 
 from apptamberia.forms import Formulario_Usuario
-def registrarUsuario(request):
+#def registrarUsuario(request):
     
-    if request.method == 'POST':
-        form_registro = Formulario_Usuario(request.POST)
-        print(form_registro)
+    #if request.method == 'POST':
+        #form_registro = Formulario_Usuario(request.POST)
+        #print(form_registro)
 
-        if form_registro.is_valid:
-            datos = form_registro.cleaned_data
+        #if form_registro.is_valid:
+            #datos = form_registro.cleaned_data
 
-            usuario = Usuarios(nombre=datos['nombre'], apellido=datos['apellido'], direccion=datos['direccion'], email=datos['email'], telefono=datos['telefono'])
-            usuario.save()
+            #usuario = Usuarios(nombre=datos['nombre'], apellido=datos['apellido'], direccion=datos['direccion'], email=datos['email'], telefono=datos['telefono'])
+            #usuario.save()
 
-            respuesta = 'Te has registrado correctamente'
-            return render(request, 'apptamberia/portal.html', respuesta)
-    else: 
-        form_registro = Formulario_Usuario()
-    return render(request, 'apptamberia/registrarUsuario.html', {'form_registro':form_registro})
-    
+            #respuesta = 'Te has registrado correctamente'
+            #return render(request, 'apptamberia/portal.html', respuesta)
+    #else: 
+        #form_registro = Formulario_Usuario()
+    #return render(request, 'apptamberia/registrarUsuario.html', {'form_registro':form_registro})
+
+class usuarioLista(ListView):
+
+    model = Usuarios
+    template_name = 'apptamberia/usuarios.html'
+
+class usuarioDetalles(DetailView):
+
+    model = Usuarios
+    template_name = 'apptamberia/usuariosDetalle.html'
+    fields = ['nombre', 'apellido', 'email', 'telefono']  
+
+class usuarioCrear(CreateView):
+
+    model = Usuarios
+    success_url = reverse_lazy('usuario_list.html')
+    fields = ['nombre', 'apellido', 'email', 'telefono']   
+
+class usuarioEditar(UpdateView):
+
+    model = Usuarios
+    template_name = reverse_lazy('usuarios.html')
+    fields = ['nombre', 'apellido', 'email', 'telefono']  
+
+class usuarioBorrar(DeleteView):
+
+    model = Usuarios
+    success_url = reverse_lazy('usuarios.html')
     
 
 

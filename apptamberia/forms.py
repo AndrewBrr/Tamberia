@@ -25,9 +25,10 @@ class UserRegisterForm(UserCreationForm):
         help_texts = {k:"" for k in fields}
 
 class Formulario_Usuario(forms.Form):
-    
-    nombre = forms.CharField(max_length=50)
-    apellido = forms.CharField(max_length=50)
-    direccion = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    telefono = forms.IntegerField()
+    class meta:
+        fields = ['nombre', 'apellido', 'email', 'telefono']
+    #nombre = forms.CharField(max_length=50)
+    #apellido = forms.CharField(max_length=50)
+    #direccion = forms.CharField(max_length=50)
+    #email = forms.EmailField()
+    #telefono = forms.IntegerField()

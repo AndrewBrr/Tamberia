@@ -1,0 +1,15 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Ahora solo queda que registres tus datos para convertirte en cliente </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+<form method="POST">{% csrf_token %}
+    Estas seguro de que deseas eliminar los datos
+    <input type="submit" value="SI">
+    
+{% endblock %}

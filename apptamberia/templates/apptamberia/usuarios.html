@@ -1,0 +1,17 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Tu Info </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+{% for usuario in object_list %}
+
+    <li>{{usuario}}</li>
+
+{% endfor %}
+
+{% endblock %}

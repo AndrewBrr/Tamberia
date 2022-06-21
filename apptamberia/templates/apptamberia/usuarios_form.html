@@ -1,0 +1,18 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Ya casi esta, solo necesitas llenar este formulario para registrarte como cliente en TAMBERIA ALEMANA </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+<form method="POST">{% csrf_token %}
+    crear usuario
+    {{form.as_p}}
+
+    <input type="submit" value="crear"
+
+
+{% endblock %}

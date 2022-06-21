@@ -1,0 +1,43 @@
+{% extends 'apptamberia/portal.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Ahora solo queda que registres tus datos para convertirte en cliente </h>
+
+{% endblock %}
+
+{% block seccion %}
+
+<h> Usuario </h>
+
+{% for usuario in object_list%}
+<li>{{usuario}}</li>
+
+<button>
+
+    <a href="% url 'usuario_detalles' usuario.id %"> Detalles</a>
+
+</button>
+
+<button>
+
+    <a href="% url 'usuario_editar' usuario.id %"> Editar</a>
+
+</button>
+
+<button>
+
+    <a href="% url 'usuario_borrar' usuario.id %"> Borrar</a>
+
+</button>
+
+
+{% endfor %}
+<br>
+<br>
+<button>
+
+    <a href="% url 'usuario_crear' usuario.id%"> Crear </a>
+</button>
+
+{% endblock %}
