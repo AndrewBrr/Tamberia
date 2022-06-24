@@ -1,0 +1,27 @@
+{% extends 'apptamberia/raiz.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+{% endblock %}
+
+{% block seccion %}
+
+{% if formulario.errors %}
+
+<p style="color:crimson"> La informacion suministrada no es valida</p>
+
+{% endif %}
+
+<form action="" method="POST"> {% csrf_token %}
+
+    <table>
+
+        {{formulario.as_table}}
+    </table>
+
+    <input type="submit", value="registrar"> 
+
+    
+</form>
+
+{% endblock %}

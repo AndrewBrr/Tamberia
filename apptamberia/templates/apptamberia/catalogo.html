@@ -1,0 +1,25 @@
+{% extends 'apptamberia/raiz.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Aqui esta una lista de los productos en stock disponibles para la compra </h>
+
+
+{% endblock %}
+
+
+{% block seccion %}
+
+<body>  
+
+    {% for merch in catalogo %}
+
+    <li> {{merch}}</li>
+    <br>
+
+    {% endfor %}
+
+</body>
+
+
+{% endblock %}

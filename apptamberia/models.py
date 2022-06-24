@@ -20,7 +20,7 @@ class Usuarios(models.Model):
     telefono = models.IntegerField()
 
     def __str__(self):
-        return self.nombre+" "+str(self.apellido)+"// "+str(self.direccion)+"// "+str(self.email)+"// "+str(self.telefono)    
+        return self.nombre+" "+str(self.apellido)+" "+str(self.email)+" "+str(self.telefono)    
 
 
 class Pedidos(models.Model):

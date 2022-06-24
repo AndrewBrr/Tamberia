@@ -30,8 +30,8 @@ def register_request(request):
         form = UserRegisterForm(request.POST)
 
         if form.is_valid():
-
-            usuario = form.cleaned_data['usuario']
+    
+            usuario = form.cleaned_data.get('username')
             form.save()
             return render(request, 'apptamberia/usuario/nuevo/.html')
 
@@ -61,6 +61,8 @@ from apptamberia.forms import Formulario_Usuario
         #form_registro = Formulario_Usuario()
     #return render(request, 'apptamberia/registrarUsuario.html', {'form_registro':form_registro})
 
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//CRUD PARA LA CREACION DE USUARIO LUEGO DEL REGISTRO//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 class usuarioLista(ListView):
 
     model = Usuarios
@@ -90,6 +92,7 @@ class usuarioBorrar(DeleteView):
     success_url = reverse_lazy('usuarios.html')
     
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//LOGIN//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 def login_request(request):
@@ -107,10 +110,61 @@ def login_request(request):
                 login(request, user)
                 return render(request, 'apptamberia/portal.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {usuario}'})
             else:
-                return render(request, 'apptamberia/portal.html', {"mensaje": "error al ingresar los datos, asegurese de ingresar los datos correctamente"})
+                return render(request, 'apptamberia/login.html', {"mensaje": "error al ingresar los datos, asegurese de ingresar los datos correctamente"})
 
         else:
             return render(request, 'apptamberia/portal.html', {"mensaje": "error de formulario"})
     else:
         form = AuthenticationForm()
         return render(request, 'apptamberia/login.html', {'form': form})
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>VER INFO DE USUARIO EN EL PERFIL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+def usuarios(request):
+    
+    user = Usuarios(nombre = 'nombre', apellido = 'apellido', email = 'email', telefono = 0)
+    user.save()
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LISTA DE PRODUCTOS PARA EL CATALOGO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+def productos(request):
+    
+    sardo = Productos(nombre = 'sardo', calidad = 'duro', tipo = 'horma', precio = 1200)
+    sardo.save()
+
+def reggianos(request):
+    reggiano = Productos(nombre = 'reggiano', calidad = 'duro', tipo = 'horma', precio = 3000)
+    reggiano.save()
+
+def  provolones(request):
+    provolone = Productos(nombre = 'provolone', calidad = 'duro', tipo = 'duro', precio = 2000)
+    provolone.save()
+
+def verCatalogo(request):
+    
+    catalogo = Productos.objects.all()
+    contexto = {'catalogo': catalogo}
+
+    return render(request, 'apptamberia/catalogo.html', contexto)
+
+def formularioProductos(request):
+    
+    if request.method == 'POST':
+        formulario = Formulario_Productos(request.POST)
+        print(formulario)
+
+        if formulario.is_valid:
+            datos = formulario.cleaned_data
+
+            producto = Productos(nombre=datos['nombre'], calidad=datos['calidad'], tipo=datos['tipo'], precio=datos['precio'])
+            producto.save()
+            
+
+            respuesta = 'Datos registrados correctamente'
+            return render(request, 'apptamberia/portal.html', {'mensaje': f'Producto archivado correctamente'})
+            
+            
+
+    else: 
+        formulario = Formulario_Productos()
+    return render(request, 'apptamberia/formularioProductos.html', {'formulario':formulario})
+

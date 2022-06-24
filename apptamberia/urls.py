@@ -1,5 +1,6 @@
 from django.urls import path
 from apptamberia.views import portal, register_request, login_request, usuarioCrear, usuarioLista, usuarioDetalles, usuarioEditar, usuarioBorrar
+from apptamberia.views import productos, verCatalogo, formularioProductos
 
 urlpatterns = [
     path('portal/', portal, name='Portal'),
@@ -11,5 +12,8 @@ urlpatterns = [
     path('usuario/nuevo/', usuarioCrear.as_view(), name='usuario_crear'),
     path('usuario/edicion/<pk>', usuarioEditar.as_view(), name='usuario_editar'),
     path('usuario/borrar/<pk>', usuarioBorrar.as_view(), name='usuario_borrar'),
+    path('verCatalogo/', verCatalogo, name=('catalogo')),
+    path('formularioProducto/', formularioProductos, name='Agregar Producto')
+
 
 ]
