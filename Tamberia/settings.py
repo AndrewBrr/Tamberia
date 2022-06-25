@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Tamberia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['C:/Users/Andrew/Desktop/DJANGO/Tamberia/Tamberia/apptamberia/templates/apptamberia/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

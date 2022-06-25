@@ -13,7 +13,7 @@ class Formulario_Productos(forms.Form):
 
 class UserRegisterForm(UserCreationForm):
     
-    usuario = forms.CharField(max_length=50)
+    username = forms.CharField(max_length=50)
     email = forms.EmailField(required=True)
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
@@ -21,7 +21,7 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
 
         model = User
-        fields = ['usuario', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         help_texts = {k:"" for k in fields}
 
 class Formulario_Usuario(forms.Form):

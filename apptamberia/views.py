@@ -31,9 +31,9 @@ def register_request(request):
 
         if form.is_valid():
     
-            usuario = form.cleaned_data.get('username')
+            username = form.cleaned_data['username']
             form.save()
-            return render(request, 'apptamberia/usuario/nuevo/.html')
+            return render(request, 'apptamberia/portal_2.html')
 
         else:
             return render(request, 'apptamberia/portal.html', {'mensaje': f'error detectado al introducir los datos, for favor asegurate de que sean correctos o validos'})
@@ -77,7 +77,7 @@ class usuarioDetalles(DetailView):
 class usuarioCrear(CreateView):
 
     model = Usuarios
-    success_url = reverse_lazy('usuario_list.html')
+    success_url = reverse_lazy('usuarios.html')
     fields = ['nombre', 'apellido', 'email', 'telefono']   
 
 class usuarioEditar(UpdateView):
@@ -101,14 +101,14 @@ def login_request(request):
         form = AuthenticationForm(request, data= request.POST)
 
         if form.is_valid():
-            usuario = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('contraseña')
 
-            user = authenticate(username=usuario, contraseña=password)
+            user = authenticate(username=user, contraseña=password)
 
             if user is not None:
                 login(request, user)
-                return render(request, 'apptamberia/portal.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {usuario}'})
+                return render(request, 'apptamberia/portal.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {username}'})
             else:
                 return render(request, 'apptamberia/login.html', {"mensaje": "error al ingresar los datos, asegurese de ingresar los datos correctamente"})
 
@@ -117,6 +117,8 @@ def login_request(request):
     else:
         form = AuthenticationForm()
         return render(request, 'apptamberia/login.html', {'form': form})
+
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>VER INFO DE USUARIO EN EL PERFIL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 def usuarios(request):
@@ -167,4 +169,5 @@ def formularioProductos(request):
     else: 
         formulario = Formulario_Productos()
     return render(request, 'apptamberia/formularioProductos.html', {'formulario':formulario})
+
 
