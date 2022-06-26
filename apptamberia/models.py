@@ -12,7 +12,7 @@ class Productos(models.Model):
             return self.nombre+" "+str(self.calidad)+" "+str(self.tipo)+" "+str(self.precio)
 
 
-class Usuarios(models.Model):
+class Clientes(models.Model):
     
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
@@ -29,7 +29,8 @@ class Pedidos(models.Model):
     direccion = models.CharField(max_length=50)
     email = models.EmailField()
     telefono = models.IntegerField()
-    pedido = models.TextField()
+    pedido = models.CharField(max_length=100)
+    
 
     def __str__(self):
         return self.cliente+" "+str(self.direccion)+"// "+str(self.email)+"// "+str(self.telefono)+"// "+str(self.pedido)

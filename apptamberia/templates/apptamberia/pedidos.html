@@ -1,0 +1,25 @@
+{% extends 'apptamberia/raiz.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+<h> Estos son los pedidos registrados hasta la fecha. Si desea agregar un pedido nuevo, favor de dirigirse a la seccion de Registrar Pedido </h>
+
+
+{% endblock %}
+
+
+{% block seccion %}
+
+<body>  
+
+    {% for pedido in lista_pedido %}
+
+    <li> {{pedido}}</li>
+    <br>
+
+    {% endfor %}
+
+</body>
+
+
+{% endblock %}

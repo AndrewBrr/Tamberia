@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apptamberia.models import Productos, Usuarios
+from apptamberia.models import Productos, Clientes, Pedidos
 from django.http import HttpResponse
 from django.template import loader
 from apptamberia.forms import Formulario_Productos
@@ -17,6 +17,14 @@ def portal(request):
     plantilla = loader.get_template('apptamberia/portal.html')
     pantalla_inicio = plantilla.render()
     return HttpResponse(pantalla_inicio)
+
+def portal_2(request):
+
+    plantilla = loader.get_template('apptamberia/portal_2.html')
+    pantalla_loged = plantilla.render()
+    return HttpResponse(pantalla_loged)
+
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -63,33 +71,33 @@ from apptamberia.forms import Formulario_Usuario
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//CRUD PARA LA CREACION DE USUARIO LUEGO DEL REGISTRO//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-class usuarioLista(ListView):
+class clienteLista(ListView):
 
-    model = Usuarios
-    template_name = 'apptamberia/usuarios.html'
+    model = Clientes
+    template_name = 'apptamberia/cliente_list.html'
 
-class usuarioDetalles(DetailView):
+class clienteDetalles(DetailView):
 
-    model = Usuarios
-    template_name = 'apptamberia/usuariosDetalle.html'
+    model = Clientes
+    template_name = 'apptamberia/clienteDetalles.html'
     fields = ['nombre', 'apellido', 'email', 'telefono']  
 
-class usuarioCrear(CreateView):
+class clienteCrear(CreateView):
 
-    model = Usuarios
-    success_url = reverse_lazy('usuarios.html')
+    model = Clientes
+    success_url = reverse_lazy('cliente_lista')
     fields = ['nombre', 'apellido', 'email', 'telefono']   
 
-class usuarioEditar(UpdateView):
+class clienteEditar(UpdateView):
 
-    model = Usuarios
-    template_name = reverse_lazy('usuarios.html')
+    model = Clientes
+    template_name = reverse_lazy('cliente_editar')
     fields = ['nombre', 'apellido', 'email', 'telefono']  
 
-class usuarioBorrar(DeleteView):
+class clienteBorrar(DeleteView):
 
-    model = Usuarios
-    success_url = reverse_lazy('usuarios.html')
+    model = Clientes
+    success_url = reverse_lazy('cliente_borrar')
     
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//LOGIN//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -108,7 +116,7 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-                return render(request, 'apptamberia/portal.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {username}'})
+                return render(request, 'apptamberia/portal_2.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {username}'})
             else:
                 return render(request, 'apptamberia/login.html', {"mensaje": "error al ingresar los datos, asegurese de ingresar los datos correctamente"})
 
@@ -121,10 +129,10 @@ def login_request(request):
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>VER INFO DE USUARIO EN EL PERFIL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-def usuarios(request):
+def clientes(request):
     
-    user = Usuarios(nombre = 'nombre', apellido = 'apellido', email = 'email', telefono = 0)
-    user.save()
+    client = Clientes(nombre = 'nombre', apellido = 'apellido', email = 'email', telefono = 0)
+    client.save()
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LISTA DE PRODUCTOS PARA EL CATALOGO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -170,4 +178,36 @@ def formularioProductos(request):
         formulario = Formulario_Productos()
     return render(request, 'apptamberia/formularioProductos.html', {'formulario':formulario})
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  REGISTRO DE PEDIDOS DE LOS CLIENTES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+from apptamberia.forms import Formulario_Pedidos
+
+
+def formularioPedidos(request):
+
+    if request.method=='POST':
+        form_pedido = Formulario_Pedidos(request.POST)
+        print(form_pedido)
+
+        if form_pedido.is_valid():
+
+            campos = form_pedido.cleaned_data
+
+            pedido = Pedidos(cliente=campos['cliente'], direccion=campos['direccion'], email=campos['email'], telefono=campos['telefono'], pedido=campos['pedido'])
+            pedido.save()
+
+            return render(request, 'apptamberia/portal_2.html', {'mensaje': 'pedido registrado correctamente'})
+        
+    else:
+        form_pedido = Formulario_Pedidos()
+        return render(request, 'apptamberia/formularioPedidos.html', {'form_pedido': form_pedido})
+
+
+
+def pedidos(request):
+
+    lista_pedidos = Pedidos.objects.all()
+    contexto = {'lista_pedidos': lista_pedidos}
+
+    return render(request, 'apptamberia/pedidos.html')
 

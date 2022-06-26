@@ -20,10 +20,14 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'Portal' %}">Portal</a>
-                <a class="navbar-brand" href="{% url 'usuario_crear' %}">Mi Info</a>
+                
+                <a class="navbar-brand" href="{% url 'clientes_lista' %}">Clientes</a>
+                <a class="navbar-brand" href="{% url 'cliente_crear' %}">Añadir Cliente</a>
+                <a class="navbar-brand" href="{% url 'pedidos' %}">Pedidos</a>
+                <a class="navbar-brand" href="{% url 'agregar_pedido' %}">Agregar Pedido</a>
                 <a class="navbar-brand" href="{% url 'logout' %}">Cerrar Sesion</a>
                 <a class="navbar-brand" href="{% url 'catalogo' %}">Catalogo</a>
+               
                 
             </div>
         </nav>

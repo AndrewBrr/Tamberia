@@ -2,6 +2,7 @@ from socket import fromshare
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from apptamberia.models import Productos
 
 class Formulario_Productos(forms.Form):
     
@@ -32,3 +33,15 @@ class Formulario_Usuario(forms.Form):
     #direccion = forms.CharField(max_length=50)
     #email = forms.EmailField()
     #telefono = forms.IntegerField()
+
+class Formulario_Pedidos(forms.Form):
+
+    cliente = forms.CharField(max_length=50)
+    direccion = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    telefono = forms.IntegerField()
+    pedido = forms.ModelChoiceField(queryset=Productos.objects.all())
+  
+
+    
+    

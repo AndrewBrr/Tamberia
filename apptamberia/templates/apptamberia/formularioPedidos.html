@@ -1,0 +1,29 @@
+{% extends 'apptamberia/raiz.html' %}
+{% load static %}
+{% block nombrar_seccion %}
+
+{% endblock %}
+
+{% block seccion %}
+
+{% if form_pedido.errors %}
+
+<p style="color:crimson"> La informacion suministrada no es valida</p>
+
+{% endif %}
+
+<h> Por favor llene los campos correspondientes para guardar el pedido </h>
+
+<form action="" method="POST"> {% csrf_token %}
+
+    <table>
+
+        {{form_pedido.as_table}}
+    </table>
+
+    <input type="submit", value="Registrar Pedido"> 
+
+    
+</form>
+
+{% endblock %}
