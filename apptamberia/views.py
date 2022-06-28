@@ -106,22 +106,23 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 def login_request(request):
     
     if request.method == 'POST':
-        form = AuthenticationForm(request, data= request.POST)
+        form = AuthenticationForm(request, request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('contraseña')
+            usuario = form.cleaned_data.get('username')
+            contraseña = form.cleaned_data.get('password')
 
-            user = authenticate(username=user, contraseña=password)
+            user = authenticate(username=usuario, password=contraseña)
 
             if user is not None:
                 login(request, user)
-                return render(request, 'apptamberia/portal_2.html', {'mensaje': f'Bienvenido a TAMBERIA ALEMANA {username}'})
+                return render(request, 'apptamberia/portal_2.html')
+
             else:
                 return render(request, 'apptamberia/login.html', {"mensaje": "error al ingresar los datos, asegurese de ingresar los datos correctamente"})
 
         else:
-            return render(request, 'apptamberia/portal.html', {"mensaje": "error de formulario"})
+            return render(request, 'apptamberia/login.html', {"mensaje": "error de formulario"})
     else:
         form = AuthenticationForm()
         return render(request, 'apptamberia/login.html', {'form': form})
@@ -206,8 +207,12 @@ def formularioPedidos(request):
 
 def pedidos(request):
 
-    lista_pedidos = Pedidos.objects.all()
-    contexto = {'lista_pedidos': lista_pedidos}
+    pedido = Pedidos.objects.all()
+    contexto = {'pedido': pedido}
 
     return render(request, 'apptamberia/pedidos.html')
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
